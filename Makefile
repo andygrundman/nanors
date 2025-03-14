@@ -1,33 +1,44 @@
 OBJ=rs.o
+OBJ_MOON=moonlight/rs.o
 
 TEST_UTILS=\
 t/00util/test\
-t/00util/bench
+t/00util/bench\
+t/00util/bench_moon
 
-#CPPFLAGS=-DOBLAS_AVX2
+#CPPFLAGS=-DOBLAS_NEON
+#CPPFLAGS=-DOBLAS_AVX512
+CPPFLAGS=-DOBLAS_AVX2
+#CPPFLAGS=-DOBLAS_SSE3
 CFLAGS   = -O3 -g -std=c11 -Wall -I. -Ideps/obl
-CFLAGS  += -march=native -funroll-loops -ftree-vectorize 
+CFLAGS  += -march=native -funroll-loops -ftree-vectorize
 
-all: rs.o
+moonlight/rs.o: CPPFLAGS+=-D_MOONLIGHT
+
+all: rs.o moonlight/rs.o
 
 t/00util/test.o: CPPFLAGS+=-D_DEFAULT_SOURCE
 
 t/00util/bench.o: CPPFLAGS+=-D_DEFAULT_SOURCE
 
+t/00util/bench_moon.o: CPPFLAGS+=-D_DEFAULT_SOURCE -D_MOONLIGHT
+
 t/00util/test: t/00util/test.o $(OBJ)
 
 t/00util/bench: t/00util/bench.o $(OBJ)
+
+t/00util/bench_moon: t/00util/bench_moon.o $(OBJ_MOON)
 
 check: clean $(TEST_UTILS)
 	prove -I. -v t/*.t
 
 clean:
-	$(RM) *.o *.a $(TEST_UTILS) $(OBJ)
+	$(RM) *.o *.a t/00util/*.o moonlight/*.o $(TEST_UTILS) $(OBJ)
 
 indent:
 	find -name '*.[h,c]' | xargs clang-format -i
 
-scan: 
+scan:
 	scan-build --status-bugs $(MAKE) clean $(OBJ) $(TEST_UTILS)
 
 valgrind: CFLAGS = -O0 -g -std=c11 -Wall -I. -Ideps/obl

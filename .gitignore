@@ -1,5 +1,7 @@
+.vscode
 rst
 bench
 *.o
 *.a
+*.exe
 

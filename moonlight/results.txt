@@ -1,0 +1,21 @@
+M1 Pro Macbook Pro, macOS 15.4, clang 17.0.0
+--------------------------------------------
+large video frame (FEC 20%) (32 shards + 8 parity), 1024 blocksize
+Moonlight C:     decoded 128 MB in 0.313 secs, throughput: 409.6MB/s
+nanors ARM NEON: decoded 128 MB in 0.030 secs, throughput: 4279.7MB/s
+
+small video frame (FEC 40%) (5 shards + 2 parity), 1024 blocksize
+Moonlight C:     decoded 128 MB in 0.087 secs, throughput: 1465.9MB/s
+nanors ARM NEON: decoded 128 MB in 0.008 secs, throughput: 15632.8MB/s
+
+AMD Ryzen 7 5800X, Win11, gcc 13.3.0
+------------------------------------
+large video frame (FEC 20%) (32 shards + 8 parity), 1024 blocksize
+Moonlight C:      decoded 128 MB in 0.239 secs, throughput: 536.4MB/s
+nanors AVX2:      decoded 128 MB in 0.018 secs, throughput: 6992.1MB/s
+nanors SSE3:      decoded 128 MB in 0.026 secs, throughput: 4894.4MB/s
+
+small video frame (FEC 40%) (5 shards + 2 parity), 1024 blocksize
+Moonlight C:      decoded 128 MB in 0.056 secs, throughput: 2267.5MB/s
+nanors AVX2:      decoded 128 MB in 0.005 secs, throughput: 24459.9MB/s
+nanors SSE3:      decoded 128 MB in 0.007 secs, throughput: 17415.6MB/s
