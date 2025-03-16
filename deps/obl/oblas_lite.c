@@ -150,7 +150,7 @@ void obl_axpyb32_ref(u8 *a, u32 *b, u8 u, unsigned k)
         op##_ref((u8 *)ap, (u8 *)bp, u, k % sizeof(__m256i));                                                                      \
     } while (0)
 
-#undef OBJ_SHUF_XOR
+#undef OBL_SHUF_XOR
 #define OBL_SHUF_XOR _mm256_xor_si256
 
 #undef OBL_AXPYB32
